@@ -33,3 +33,12 @@ app.get('/greetings/:name', (req, res) => {
 // // between 0 and the given number. For example, a request to /roll/16 might respond with 
 // “You rolled a 14.”
 
+app.get('/roll/:number', (req, res) => {
+
+  
+  const number = req.params.number;
+  if(number != (typeof number))
+  res.send ('You must specify a number'); 
+
+else res.send(`You rolled a ${number}`); 
+})
