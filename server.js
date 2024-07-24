@@ -80,4 +80,39 @@ const shoes = [
   { name: "Fifty-Inch Heels", price: 175, type: "heel" }
 ];
 
+function filterShoes(query) {
+  let filteredShoes = shoes;
 
+  // Filter by min-price
+  if (query.hasOwnProperty('min-price')) {
+    const minPrice = parseFloat(query['min-price']);
+    if (!isNaN(minPrice)) {
+      filteredShoes = filteredShoes.filter(shoe => shoe.price >= minPrice);
+    }
+  }
+
+  // Filter by max-price
+  if (query.hasOwnProperty('max-price')) {
+    const maxPrice = parseFloat(query['max-price']);
+    if (!isNaN(maxPrice)) {
+      filteredShoes = filteredShoes.filter(shoe => shoe.price <= maxPrice);
+    }
+  }
+
+  // Filter by type
+  if (query.hasOwnProperty('type')) {
+    const type = query.type;
+    filteredShoes = filteredShoes.filter(shoe => shoe.type === type);
+  }
+
+  return filteredShoes;
+}
+
+// Example usage (assuming this is within a framework that handles routing)
+const route = '/shoes';
+
+app.get(route, (req, res) => {
+  const query = req.query;
+  const filteredShoes = filterShoes(query);
+  res.json(filteredShoes);
+});
